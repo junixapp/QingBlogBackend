@@ -1,4 +1,4 @@
-## QingBlog Server端
+## QingBlog后端
 Koa2套件 + mongoose
 
 
@@ -8,6 +8,8 @@ Koa2套件 + mongoose
 - router层只负责映射路由，调用controller层，然后响应success数据，不应该抛出异常，不应该响应错误的数据
 - controller层为router层服务，负责执行业务逻辑，参数检查，读取db，返回数据，抛出异常
 - 中间件负责处理所有的错误返回
+
+
 
 
 
@@ -32,9 +34,9 @@ Koa2套件 + mongoose
 - 失败响应码采用400：错误码按照模块分类：
 
   ```json
-  {code: errCode, msg: errMsg}
+  {code: "errCode", msg: "errMsg"}
   ```
-  //比如errCode设计如下：
+  比如errCode设计如下：
   ```
   TokenNotExist - token不存在
   TokenInvalidToken - token失效
@@ -45,3 +47,8 @@ Koa2套件 + mongoose
   ```
 
   ​
+
+##  全局错误处理
+
+所有的中间件都将错误抛出，由最外层的`error_handler`中间件来处理，包括数据库异常，最后将错误信息封装为json返回。
+
