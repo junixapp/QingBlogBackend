@@ -12,5 +12,5 @@ load_router(app)
 //connect db
 connect_db()
 
-app.listen(8081)
+app.listen(80)
 

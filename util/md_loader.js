@@ -20,7 +20,8 @@ function load_middlerware(app) {
         maxage: 1000 * 60 * 60 * 24 * 365
     }
     //将static中间件挂载到指定路径，默认是根目录
-    app.use(mount('/static', serve("static", opts)))
+    // app.use(mount('/static', serve("static", opts)))
+    app.use(mount('/', serve("static", opts)))
     app.use(bodyParser())
 
     //token process
