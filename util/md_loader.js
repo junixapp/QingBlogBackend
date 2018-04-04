@@ -1,5 +1,4 @@
 const logger = require('koa-logger')
-const serve = require('koa-static')
 const bodyParser = require('koa-bodyparser')
 const errHandler = require('../middleware/err_handler')
 const authHandler = require('../middleware/auth_handler')
@@ -16,12 +15,6 @@ function load_middlerware(app) {
     // global error handler
     app.use(errHandler())
 
-    let opts = {
-        maxage: 1000 * 60 * 60 * 24 * 365
-    }
-    //将static中间件挂载到指定路径，默认是根目录
-    // app.use(mount('/static', serve("static", opts)))
-    app.use(mount('/', serve("static", opts)))
     app.use(bodyParser())
 
     //token process
