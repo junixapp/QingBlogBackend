@@ -1,10 +1,13 @@
 'use strict'
 /**
- * token验证和权限检查
+ * token验证
  */
 
 const authController = require('../controller/auth_controller')
-const {PermissionDenyError} = require("../model/api_msg")
+const { TokenMissError, TokenInvalidError} = require("../model/api_msg")
+const jwt = require('jsonwebtoken')
+const config = require('../config')
+const util = require('util')
 
 //需要验证的方法
 const authMethod = ['POST','PUT','DELETE']
@@ -16,7 +19,11 @@ const excludePaths = [
 ]
 
 //检查是否需要排除
-function isExclude(path) {
+function isExclude(method, path) {
+    if(!authMethod.includes(method.toUpperCase())){
+        return true
+    }
+
     if(excludePaths.includes(path)){
         return true
     }
@@ -28,27 +35,30 @@ function isExclude(path) {
     return false
 }
 
-//是否需要检查权限
-function isNeedPermission(ctx) {
-    return ctx.path.startsWith("/users") && ctx.method==="DELETE"
-}
 
 const token_handler = async (ctx, next) => {
-    if(isExclude(ctx.path)){
+    if(isExclude(ctx.method, ctx.path)){
         await next()
     }else {
-        //放入全局auth信息
-        if(authMethod.includes(ctx.method)){
-            //need check token
-            let auth = await authController.checkToken(ctx.request.header.token)
-            //put auth info to ctx.state.
-            ctx.state.auth = auth
+        if(!ctx.header.token){
+            throw TokenMissError
         }
 
-        //checkPermission
-        if(isNeedPermission(ctx)){
-            if(!ctx.state.auth.isAdmin){
-                throw PermissionDenyError
+        try {
+            // 验证jwt token
+            const data = await util.promisify(jwt.verify)(ctx.header.token, config.JWT_SECRET)
+
+            //放入全局auth信息
+            let auth = await authController.getAuthByUsername(data.username)
+            //put auth info to ctx.state.
+            ctx.state.auth = auth
+        } catch (e) {
+            if (e.name === 'TokenExpiredError') {
+                // token过期
+                throw TokenInvalidError
+            } else if (e.name === 'JsonWebTokenError') {
+                // secret 错误
+                throw TokenWrongError
             }
         }
 

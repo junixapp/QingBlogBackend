@@ -3,7 +3,8 @@ const bodyParser = require('koa-bodyparser')
 const errHandler = require('../middleware/err_handler')
 const authHandler = require('../middleware/auth_handler')
 const restHandler = require('../middleware/rest_handler')
-const mount = require('koa-mount');
+const permissionHandler = require('../middleware/permission_handler')
+
 
 function load_middlerware(app) {
     //logger放在restHandler的外层，因为内部会更改ctx的status，
@@ -17,8 +18,11 @@ function load_middlerware(app) {
 
     app.use(bodyParser())
 
-    //token process
+    //jwt中间件
     app.use(authHandler())
+
+    //权限检查中间件
+    app.use(permissionHandler())
 
 }
 

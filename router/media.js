@@ -14,7 +14,7 @@ let storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 
 const router = new Router({
-    prefix: '/api/medias'
+    prefix: '/medias'
 })
 
 router.post('/', upload.single('avatar'), async (ctx) => {

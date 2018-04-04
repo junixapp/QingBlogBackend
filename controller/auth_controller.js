@@ -1,32 +1,12 @@
 'use strict'
-const {TokenMissError, TokenInvalidError, TokenNotFoundError, UserNotFoundError,
+const { UserNotFoundError,
     UsernameOrPswMissError, UsernameOrPswWrongError, UserAlreadyExistError} = require('../model/api_msg')
 const Auth = require('../model/auth')
 const User = require('../model/user')
 const encrypter = require('../util/encrypter')
 const userController = require('./user_controller')
-
-//token有效期
-const TokenExpire = 1000 * 60 * 60 * 24
-
-async function checkToken(token) {
-    if (token) {
-        //1.find token.
-        let auth = await Auth.findOne({token: token}).select("-__v").exec()
-        if (auth) {
-            //2.check expire
-            if (auth.expire < Date.now()) {
-                throw TokenInvalidError
-            }
-            return auth
-        } else {
-            // wrong token.
-            throw TokenNotFoundError
-        }
-    } else {
-        throw TokenMissError
-    }
-}
+const jwt = require('jsonwebtoken')
+const config = require('../config')
 
 async function getAuthByUsername(username) {
     let auth = await Auth.findOne({username: username}).exec()
@@ -58,10 +38,11 @@ async function loginUser(username, password) {
         if(auth){
             let user = await userController.getUserByUsername(username)
 
-            //gen token.
-            let token = encrypter.genToken(username)
-            let expire = Date.now() + TokenExpire
-            await Auth.update({username: username}, {token: token, expire: expire}).exec()
+            //jwt token.
+            const token = jwt.sign({
+                username: user.username
+            }, config.JWT_SECRET, { expiresIn: config.JWT_EXPIRE });
+            // 返回给router，router负责将token设置到header中
             return {
                 user: user,
                 token: token
@@ -85,7 +66,6 @@ async function registerUser(username, password) {
 }
 
 module.exports = {
-    checkToken,
     loginUser,
     registerUser,
     deleteAuthByUsername

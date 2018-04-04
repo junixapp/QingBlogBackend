@@ -16,7 +16,7 @@ db.on('error', function (err) {
 });
 
 function connect_db() {
-    mongoose.connect(`mongodb://${host}:${port}/${dbname}`, {useMongoClient: true})
+    mongoose.connect(`mongodb://${host}:${port}/${dbname}`)
 }
 
 module.exports = connect_db

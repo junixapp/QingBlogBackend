@@ -10,8 +10,6 @@ const schema = new mongoose.Schema({
         type: String,
         required: [true, "密码不能缺少"]
     },
-    token: String,
-    expire: Number,
     role: {      //用户角色
         type: Number,
         default: 0

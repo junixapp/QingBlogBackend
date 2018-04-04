@@ -4,7 +4,7 @@ const Router = require('koa-router')
 const blogController = require('../controller/blog_controller')
 
 const router = new Router({
-    prefix: '/api/blogs'
+    prefix: '/blogs'
 })
 
 router.get("/", async (ctx) => {

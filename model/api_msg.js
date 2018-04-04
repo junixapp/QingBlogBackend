@@ -31,7 +31,7 @@ module.exports = {
     //Token相关
     TokenInvalidError: new ApiMsg(-20, "token失效"),
     TokenMissError: new ApiMsg(-21, "缺少token"),
-    TokenNotFoundError: new ApiMsg(-22, "token不存在"),
+    TokenWrongError: new ApiMsg(-22, "token错误"),
 
 
     //用户相关

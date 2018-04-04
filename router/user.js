@@ -5,7 +5,7 @@ const userController = require('../controller/user_controller')
 const authController = require('../controller/auth_controller')
 
 const router = new Router({
-    prefix: '/api/users'
+    prefix: '/users'
 })
 
 router.get('/:username', async (ctx) => {

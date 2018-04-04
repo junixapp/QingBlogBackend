@@ -4,13 +4,15 @@ const Router = require('koa-router')
 const authController = require('../controller/auth_controller')
 
 const router = new Router({
-    prefix: '/api/auth'
+    prefix: '/auth'
 })
 
 router.post('/login', async (ctx) => {
     let {username, password} = ctx.request.body
     let data = await authController.loginUser(username, password)
-    ctx.success(data)
+    // 将jwt token设置到相应header中
+    ctx.res.header.token = data.token
+    ctx.success(data.user)
 })
 
 router.post('/register', async (ctx) => {

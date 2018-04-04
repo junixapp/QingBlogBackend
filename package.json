@@ -4,20 +4,17 @@
   "description": "A blog system based on koa2 and nodejs",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "author": "lixiaojun",
   "license": "ISC",
   "dependencies": {
+    "jsonwebtoken": "^8.2.0",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
     "koa-logger": "^3.1.0",
-    "koa-mount": "^3.0.0",
-    "koa-multer": "^1.0.2",
     "koa-router": "^7.3.0",
-    "mongoose": "^4.13.9",
-    "uuid": "^3.1.0"
+    "mongoose": "^4.13.9"
   },
   "devDependencies": {}
 }
