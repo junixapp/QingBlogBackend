@@ -27,13 +27,13 @@ Koa2套件 + mongoose
 - 成功只有一种，msg只是辅助客户端，所以http响应码为200，内容是：
 
   ```javascript
-  {code: "success", msg: "成功", data: xx}
+  { code: "success", msg: "成功", data: xx }
   ```
 
 - 失败响应码采用400：错误码按照模块分类：
 
   ```javascript
-  {code: "errCode", msg: "errMsg"}
+  { code: "errCode", msg: "errMsg" }
   ```
   比如errCode设计如下：
   ```
