@@ -1,21 +1,19 @@
 'use strict'
 
-const {PageMissError, PageWrongError, NameExistError,
+const {PageWrongError, NameExistError,
     AddError, UpdateError, DeleteError, IdMissError} = require('../model/api_msg')
 const Blog = require('../model/blog')
 
 const PageCount = 10
 
-async function getBlogs(page) {
-    if(!page){
-        throw PageMissError
-    }
-    if(page<1){
+async function getBlogs(page = 0) {
+    if(page<0){
         throw PageWrongError
     }
 
     let count = await Blog.count().exec()
-    let blogs = await Blog.find({}).select("-__v").limit(PageCount).skip((page-1)*PageCount).sort({'_id':-1}).exec()
+    let skip = page===0 ? 0 : (page-1)*PageCount
+    let blogs = await Blog.find({}).select("-__v").limit(PageCount).skip(skip).sort({'_id':-1}).exec()
     return { total: count, blogs: blogs}
 }
 
