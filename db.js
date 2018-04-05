@@ -1,11 +1,11 @@
 'use strict'
 const mongoose = require('mongoose')
+const config = require('./config')
 
-let host = 'localhost',
-    port = 27017,
-    dbname = 'QingBlog-test'
+let host = '127.0.0.1',
+    port = 27017;
 
-mongoose.connect(`mongodb://${host}:${port}/${dbname}`)
+mongoose.connect(`mongodb://${host}:${port}/${config.DB_NAME}`)
 let db = mongoose.connection
 db.once('open', function () {
     console.log("connect db successfully!");
