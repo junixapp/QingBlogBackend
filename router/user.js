@@ -5,7 +5,7 @@ const userController = require('../controller/user_controller')
 const authController = require('../controller/auth_controller')
 
 const router = new Router({
-    prefix: '/users'
+    prefix: '/api/users'
 })
 
 router.get('/:username', async (ctx) => {
@@ -14,7 +14,6 @@ router.get('/:username', async (ctx) => {
 })
 
 router.delete('/:username', async (ctx) => {
-
     await userController.deleteUserByUsername(ctx.params.username)
     await authController.deleteAuthByUsername(ctx.params.username)
     ctx.success()

@@ -4,7 +4,7 @@ const Router = require('koa-router')
 const statController = require('../controller/stat_controller')
 
 const router = new Router({
-    prefix: '/stats'
+    prefix: '/api/stats'
 })
 
 router.get("/", async (ctx) => {

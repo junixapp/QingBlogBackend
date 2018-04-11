@@ -4,7 +4,7 @@ const Router = require('koa-router')
 const blogController = require('../controller/blog_controller')
 
 const router = new Router({
-    prefix: '/blogs'
+    prefix: '/api/blogs'
 })
 
 router.get("/", async (ctx) => {
@@ -22,7 +22,7 @@ router.post("/", async (ctx) => {
 
 router.put("/", async (ctx) => {
     let id = ctx.request.query.id
-    await blogController.updateBlog(id, ctx.request.body)
+    await blogController.updateBlogById(id, ctx.request.body)
     ctx.success()
 })
 
