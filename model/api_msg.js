@@ -42,5 +42,11 @@ module.exports = {
     UsernameMissError: new ApiMsg(-34, "缺少username"),
     AvatarMissError: new ApiMsg(-35, "缺少avatar"),
 
+    //category
+    CategoryMissError : new ApiMsg(-40, "缺少分类"),
+
+    //blog相关
+    BlogNotFoundError: new ApiMsg(-50, "博客不存在"),
+
     //stat相关
 }
