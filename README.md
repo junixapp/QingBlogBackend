@@ -1,6 +1,7 @@
 ## QingBlog后端
 Koa2套件 + mongoose
-前端项目为：[QingBlog前端](https://github.com/li-xiaojun/QingBlogFrontend)
+
+**前端项目为**：[QingBlog前端](https://github.com/li-xiaojun/QingBlogFrontend)
 
 
 ## 结构说明
