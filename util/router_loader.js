@@ -2,7 +2,7 @@
 const fs = require('fs')
 const path = require('path')
 
-function load_router(app = {}) {
+function load_router(app) {
     //load all routers.
     const router_dir = path.join(__dirname, '../router')
     const router_files = fs.readdirSync(router_dir)

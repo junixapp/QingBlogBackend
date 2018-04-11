@@ -4,7 +4,7 @@
  */
 
 const authController = require('../controller/auth_controller')
-const { TokenMissError, TokenInvalidError} = require("../model/api_msg")
+const { TokenMissError, TokenInvalidError,TokenWrongError} = require("../model/api_msg")
 const jwt = require('jsonwebtoken')
 const config = require('../config')
 const util = require('util')
@@ -41,17 +41,18 @@ const token_handler = async (ctx, next) => {
         await next()
     }else {
         if(!ctx.header.token){
-            throw TokenMissError
+            throw TokenMissError;
         }
 
         try {
             // 验证jwt token
-            const data = await util.promisify(jwt.verify)(ctx.header.token, config.JWT_SECRET)
+            const data = await util.promisify(jwt.verify)(ctx.header.token, config.JWT_SECRET);
 
             //放入全局auth信息
-            let auth = await authController.getAuthByUsername(data.username)
+            let auth = await authController.getAuthByUsername(data.username);
             //put auth info to ctx.state.
-            ctx.state.auth = auth
+            ctx.state.auth = auth;
+            await next()
         } catch (e) {
             if (e.name === 'TokenExpiredError') {
                 // token过期
@@ -60,9 +61,9 @@ const token_handler = async (ctx, next) => {
                 // secret 错误
                 throw TokenWrongError
             }
+            console.log(e);
         }
 
-        await next()
     }
 }
 

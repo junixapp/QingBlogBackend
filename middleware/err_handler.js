@@ -10,6 +10,7 @@ const err_handler = async (ctx, next) => {
     try {
         await next()
     } catch (err) {
+        console.log(err);
         // when it is a api-level or db-level error, should be 400.
         if (err && err instanceof ApiMsg) {
             //it is a api-level error.

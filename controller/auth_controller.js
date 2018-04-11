@@ -36,6 +36,7 @@ async function loginUser(username, password) {
         let encryptPsw = encrypter.encrypt_psw(password, username)
         auth = await Auth.findOne({username: username, password: encryptPsw}).exec()
         if(auth){
+
             let user = await userController.getUserByUsername(username)
 
             //jwt token.
@@ -68,5 +69,6 @@ async function registerUser(username, password) {
 module.exports = {
     loginUser,
     registerUser,
-    deleteAuthByUsername
+    deleteAuthByUsername,
+    getAuthByUsername
 }
