@@ -9,7 +9,7 @@ const router = new Router({
 
 router.get("/", async (ctx) => {
     let page = ctx.request.query.page || 0
-    let data = await blogController.getBlogs(page)
+    let data = await blogController.getBlogs(page, ctx.request.query.category)
     ctx.success(data)
 })
 

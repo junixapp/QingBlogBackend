@@ -14,7 +14,7 @@ async function checkNameExist(name) {
 
 async function getAllCategory() {
     let count = await Category.count().exec()
-    let categories = await Category.find({}).select("-__v").sort({'_id':-1}).exec()
+    let categories = await Category.find({}).select("-__v").sort({'_id':1}).exec()
     return { total: count, categories: categories}
 }
 async function getCategoriesByPage(page = 1) {
@@ -23,7 +23,7 @@ async function getCategoriesByPage(page = 1) {
     }
     let count = await Category.count().exec()
     let skip = page<=1 ? 0 : (page-1)*PageCount
-    let categories = await Category.find({}).select("-__v").limit(PageCount).skip(skip).sort({'_id':-1}).exec()
+    let categories = await Category.find({}).select("-__v").limit(PageCount).skip(skip).sort({'_id':1}).exec()
     return { total: count, categories: categories}
 }
 

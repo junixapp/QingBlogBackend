@@ -8,14 +8,19 @@ const categoryController = require('./category_controller')
 
 const PageCount = 10
 
-async function getBlogs(page = 1) {
+async function getBlogs(page = 1, category='') {
     if(page<0){
         throw PageWrongError
     }
 
-    let count = await Blog.count().exec()
     let skip = page<=1 ? 0 : (page-1)*PageCount
-    let blogs = await Blog.find({}).select("-__v").limit(PageCount).skip(skip).sort({'_id':-1}).populate('category').exec()
+    let condition = {}
+    if(category !== '' ){
+        condition = {category}
+
+    }
+    let count = await Blog.count(condition).exec()
+    let blogs = await Blog.find(condition).select("-__v").limit(PageCount).skip(skip).sort({'_id':-1}).populate('category').exec()
     return { total: count, blogs: blogs}
 }
 
@@ -98,8 +103,10 @@ async function deleteBlog(id) {
     if(!id){
         throw IdMissError
     }
+    let blog = await getBlogById(id)
     let res = await Blog.remove({_id: id}).exec()
-    //delete comment!
+    //increase category blogCount field.
+    await categoryController.decreaseBlogCount(blog.category)
     if(!res){
         throw DeleteError
     }
