@@ -36,7 +36,7 @@ function isExclude(method, path) {
 }
 
 
-const token_handler = async (ctx, next) => {
+module.exports = async (ctx, next) => {
     if(isExclude(ctx.method, ctx.path)){
         await next()
     }else {
@@ -52,6 +52,7 @@ const token_handler = async (ctx, next) => {
             let auth = await authController.getAuthByUsername(data.username);
             //put auth info to ctx.state.
             ctx.state.auth = auth;
+            
             await next()
         } catch (e) {
             if (e.name === 'TokenExpiredError') {
@@ -60,11 +61,12 @@ const token_handler = async (ctx, next) => {
             } else if (e.name === 'JsonWebTokenError') {
                 // secret 错误
                 throw TokenWrongError
+            } else {
+                // 这个异常一定要抛出，因为上面将await next()写在了try里面，那么后续的中间件抛出的异常就会被此处捕获到
+                // 然后继续抛出，交由全局错误器处理
+                throw e
             }
-            console.log(e);
         }
 
     }
 }
-
-module.exports = () => token_handler

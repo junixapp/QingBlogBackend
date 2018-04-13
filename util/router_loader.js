@@ -8,7 +8,7 @@ function load_router(app) {
     const router_files = fs.readdirSync(router_dir)
     router_files.forEach((f) => {
         const router = require(router_dir + '/' + f)
-        app.use(router.routes())
+        app.use(router.routes()).use(router.allowedMethods());
     })
 }
 

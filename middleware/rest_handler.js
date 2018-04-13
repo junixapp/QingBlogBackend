@@ -1,8 +1,7 @@
 'use strict'
 const {Success} = require("../model/api_msg");
 
-module.exports = () => {
-    return async (ctx, next) => {
+module.exports =  async (ctx, next) => {
         //成功响应的方法
         ctx.type = 'application/json';
         ctx.success = (data) => {
@@ -21,7 +20,5 @@ module.exports = () => {
                 msg: msg,
             }
         };
-
         await next()
-    }
-}
+    };

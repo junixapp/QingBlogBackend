@@ -15,8 +15,8 @@ router.get("/", async (ctx) => {
 
 router.post("/", async (ctx) => {
     let blog = ctx.request.body
-    blog.author = ctx.state.auth.username
-    await blogController.addBlog(blog)
+    blog.author = ctx.state.auth.username;
+    await blogController.addBlog(blog);
     ctx.success()
 })
 

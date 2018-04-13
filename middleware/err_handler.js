@@ -6,9 +6,9 @@ const {ApiMsg, DBError, UnknownError} = require('../model/api_msg')
 const ValidatorError = require('mongoose').Error.ValidationError
 
 
-const err_handler = async (ctx, next) => {
+module.exports = async (ctx, next) => {
     try {
-        await next()
+        await next();
     } catch (err) {
         console.log(err);
         // when it is a api-level or db-level error, should be 400.
@@ -27,6 +27,5 @@ const err_handler = async (ctx, next) => {
             ctx.error(UnknownError.code, UnknownError.msg)
         }
     }
-}
+};
 
-module.exports = () => err_handler

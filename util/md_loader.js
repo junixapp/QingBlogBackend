@@ -9,20 +9,19 @@ const permissionHandler = require('../middleware/permission_handler')
 function load_middlerware(app) {
     //logger放在restHandler的外层，因为内部会更改ctx的status，
     app.use(logger())
-
     //rest_handler，给ctx安装success和error方法
-    app.use(restHandler())
+    app.use(restHandler)
 
     // global error handler
-    app.use(errHandler())
+    app.use(errHandler)
 
     app.use(bodyParser())
 
     //jwt中间件
-    app.use(authHandler())
+    app.use(authHandler)
 
     //权限检查中间件
-    app.use(permissionHandler())
+    app.use(permissionHandler)
 
 }
 

@@ -38,6 +38,7 @@ async function addCategory(name) {
 
 /**
  * update 为更新的属性对象
+ *
  * @param id
  * @param update
  */

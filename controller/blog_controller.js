@@ -26,16 +26,15 @@ async function getBlogs(page = 1, category='') {
 
 async function addBlog(blog) {
     //检查是否有同名的blog
-    let res1 = await Blog.findOne({title: blog.title}).exec()
+    let res1 = await Blog.findOne({title: blog.title}).exec();
     if(res1){
         throw NameExistError
     }
-
     // 检查是否有category
     if(!blog.category){
         throw CategoryMissError
     }
-
+    
     let res2 = await Blog.create(blog)
     // category的blogCount增加
     await categoryController.increaseBlogCount(blog.category)
