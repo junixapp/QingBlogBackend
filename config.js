@@ -5,5 +5,5 @@ module.exports = {
 
     DB_NAME: 'QingBlog',
 
-    APP_PORT: 3000,
+    APP_PORT: 80,
 }
