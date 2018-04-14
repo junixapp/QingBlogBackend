@@ -10,14 +10,18 @@ async function getAllStats() {
 }
 
 async function addStat(stat) {
+
     let res = await Stat.create(stat)
     if(!res){
         throw AddError
     }
 }
 
+async function getAccessCount() {
+    return await Stat.count().exec()
+}
 
 module.exports = {
-    getAllStats,
+    getAccessCount,
     addStat,
 }

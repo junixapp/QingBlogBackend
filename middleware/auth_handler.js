@@ -17,6 +17,7 @@ const excludePaths = [
     '/api/auth/login',
     '/api/auth/register',
     '/api/blogs/addReadCount',
+    '/api/stats',
 ]
 
 //检查是否需要排除

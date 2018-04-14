@@ -7,13 +7,13 @@ const router = new Router({
     prefix: '/api/stats'
 })
 
-router.get("/", async (ctx) => {
-    let data = await statController.getAllStats()
+router.get("/count", async (ctx) => {
+    let data = await statController.getAccessCount()
     ctx.success(data)
 })
 
 router.post("/", async (ctx) => {
-    await statController.addCategory(ctx.request.body)
+    await statController.addStat(ctx.request.body)
     ctx.success()
 })
 
