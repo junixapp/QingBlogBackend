@@ -77,7 +77,7 @@ async function updateBlogById(id, blog) {
 async function updateBlog(condition, update) {
     let res = await Blog.update(condition, update).exec();
     console.log(res);
-    if(!res ||  res.nModified === 0){
+    if(!res ||  res.n === 0){
         throw UpdateError
     }
 }
@@ -111,6 +111,17 @@ async function deleteBlog(id) {
     }
 }
 
+// 增加一个访问计数
+async function addReadCount(id) {
+    if(!id){
+        throw IdMissError
+    }
+    let blog = await getBlogById(id)
+    let count = blog.readCount || 0
+    await updateBlog({_id:id}, {readCount: count+1});
+
+}
+
 
 module.exports = {
     getBlogs,
@@ -118,4 +129,5 @@ module.exports = {
     updateBlogById,
     deleteBlog,
     updateBlog,
+    addReadCount
 }

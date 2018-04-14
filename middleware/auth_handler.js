@@ -16,6 +16,7 @@ const authMethod = ['POST','PUT','DELETE']
 const excludePaths = [
     '/api/auth/login',
     '/api/auth/register',
+    '/api/blogs/addReadCount',
 ]
 
 //检查是否需要排除

@@ -20,6 +20,12 @@ router.post("/", async (ctx) => {
     ctx.success()
 })
 
+router.post("/addReadCount", async (ctx) => {
+    let id = ctx.request.body.id
+    await blogController.addReadCount(id);
+    ctx.success()
+})
+
 router.put("/", async (ctx) => {
     let id = ctx.request.query.id
     await blogController.updateBlogById(id, ctx.request.body)
