@@ -9,7 +9,15 @@ const router = new Router({
 
 router.get("/", async (ctx) => {
     let page = ctx.request.query.page || 0
-    let data = await blogController.getBlogs(page, ctx.request.query.category)
+    let cateName = ctx.request.query.categoryName
+    let data = []
+    if(cateName){
+        // 按照分类的名称来获取博客
+        data = await blogController.getBlogsByCategoryName(page, cateName)
+    }else {
+        // 按照分类的id来获取博客
+        data = await blogController.getBlogs(page, ctx.request.query.category)
+    }
     ctx.success(data)
 })
 

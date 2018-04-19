@@ -2,7 +2,8 @@
 
 const {PageWrongError, NameExistError,
     AddError, UpdateError, DeleteError,
-    IdMissError,CategoryMissError,BlogNotFoundError} = require('../model/api_msg');
+    IdMissError,CategoryMissError,BlogNotFoundError,
+    CategoryNameMissError} = require('../model/api_msg');
 const Blog = require('../model/blog')
 const categoryController = require('./category_controller')
 
@@ -19,6 +20,23 @@ async function getBlogs(page = 1, category='') {
         condition = {category}
 
     }
+    let count = await Blog.count(condition).exec()
+    let blogs = await Blog.find(condition).select("-__v").limit(PageCount).skip(skip).sort({'_id':-1}).populate('category').exec()
+    return { total: count, blogs: blogs}
+}
+
+async function getBlogsByCategoryName(page = 1, categoryName = '') {
+    if(page<0){
+        throw PageWrongError
+    }
+    if(categoryName === ''){
+        throw CategoryNameMissError
+    }
+
+    let skip = page<=1 ? 0 : (page-1)*PageCount
+    // 根据categoryName找到对应的id
+    let condition = {category: await categoryController.getCategoryIdByName(categoryName)}
+
     let count = await Blog.count(condition).exec()
     let blogs = await Blog.find(condition).select("-__v").limit(PageCount).skip(skip).sort({'_id':-1}).populate('category').exec()
     return { total: count, blogs: blogs}
@@ -129,5 +147,6 @@ module.exports = {
     updateBlogById,
     deleteBlog,
     updateBlog,
-    addReadCount
+    addReadCount,
+    getBlogsByCategoryName
 }

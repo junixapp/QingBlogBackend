@@ -1,6 +1,7 @@
 'use strict'
 
-const { NameExistError, AddError, UpdateError, DeleteError,PageWrongError} =  require("../model/api_msg")
+const { NameExistError, AddError, UpdateError,
+    DeleteError,PageWrongError,CategoryNotFoundError} =  require("../model/api_msg")
 const Blog = require('../model/blog')
 const Category = require('../model/category')
 const blogController = require('./blog_controller')
@@ -50,6 +51,13 @@ async function updateCategory(id, update) {
     }
 }
 
+async function getCategoryIdByName(name) {
+    let cate = await Category.findOne({name: name})
+    if(!cate){
+        throw CategoryNotFoundError
+    }
+    return cate._id
+}
 
 /**
  * 将blogCount数量增加1
@@ -96,5 +104,6 @@ module.exports = {
     updateCategory,
     deleteCategory,
     increaseBlogCount,
-    decreaseBlogCount
+    decreaseBlogCount,
+    getCategoryIdByName
 }

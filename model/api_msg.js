@@ -44,6 +44,8 @@ module.exports = {
 
     //category
     CategoryMissError : new ApiMsg(-40, "缺少分类"),
+    CategoryNameMissError : new ApiMsg(-41, "缺少分类名称"),
+    CategoryNotFoundError : new ApiMsg(-41, "分类未找到"),
 
     //blog相关
     BlogNotFoundError: new ApiMsg(-50, "博客不存在"),
