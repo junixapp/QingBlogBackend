@@ -23,6 +23,7 @@ Koa2套件 + mongoose
 
 ## RestfulAPI设计
 
+
 > code采用字符串，目的是不用查表。
 
 - 成功只有一种，msg只是辅助客户端，所以http响应码为200，内容是：
@@ -31,7 +32,7 @@ Koa2套件 + mongoose
   { code: "success", msg: "成功", data: xx }
   ```
 
-- 失败响应码采用400：错误码按照模块分类：
+- 失败响应码采用500：错误码按照模块分类：
 
   ```javascript
   { code: "errCode", msg: "errMsg" }
