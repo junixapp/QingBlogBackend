@@ -21,7 +21,7 @@ async function getBlogs(page = 1, category='') {
 
     }
     let count = await Blog.count(condition).exec()
-    let blogs = await Blog.find(condition).select("-__v").limit(PageCount).skip(skip).sort({'_id':-1}).populate('category').exec()
+    let blogs = await Blog.find(condition).select("-__v").limit(PageCount).skip(skip).sort({'createdAt':-1}).populate('category').exec()
     return { total: count, blogs: blogs}
 }
 
