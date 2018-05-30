@@ -1,7 +1,7 @@
 'use strict'
 module.exports = {
     JWT_SECRET: 'QingBlog',
-    JWT_EXPIRE: 3600 * 24 * 360, //a week
+    JWT_EXPIRE: 3600 * 24 * 30, //a month
 
     DB_NAME: 'QingBlog',
 
