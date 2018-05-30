@@ -10,7 +10,7 @@ const config = require('../config')
 const util = require('util')
 
 //需要验证的方法
-const authMethod = ['POST','PUT','DELETE']
+const authMethod = ['POST','PUT','DELETE', 'GET']
 
 //排除的路由
 const excludePaths = [
