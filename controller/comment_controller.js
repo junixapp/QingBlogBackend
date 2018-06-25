@@ -21,9 +21,10 @@ async function getCommentByBlogId(blogId, page = 1) {
     if(page<0){
         throw PageWrongError
     }
-    let count = await Comment.count()
+    let condition = {blogId: blogId};
+    let count = await Comment.count(condition)
     let skip = page<=1 ? 0 : (page-1)*PageCount;
-    let comments = await Comment.find({}).select("-__v").limit(PageCount).skip(skip).sort({'_id':1}).exec()
+    let comments = await Comment.find(condition).select("-__v").limit(PageCount).skip(skip).sort({'createdAt':-1}).exec()
     return { total: count, comments}
 }
 

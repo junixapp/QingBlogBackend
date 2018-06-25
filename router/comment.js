@@ -15,7 +15,7 @@ router.get("/", async (ctx) => {
 });
 
 router.post("/", async (ctx) => {
-    let comment = ctx.request.body
+    let comment = ctx.request.body;
     await commentController.createComment(comment);
     ctx.success()
 });
