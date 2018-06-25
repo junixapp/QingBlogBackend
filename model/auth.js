@@ -14,9 +14,9 @@ const schema = new mongoose.Schema({
         type: Number,
         default: 0
     }
-}, {timestamps: true})
+}, {timestamps: true});
 
-const AdminRole = 10086
+const AdminRole = 10086;
 
 schema.virtual('isAdmin').get(function () {
     return this.role === AdminRole

@@ -9,5 +9,5 @@ const app = new Koa();
 load_md(app)
 load_router(app)
 
-app.listen(config.APP_PORT)
+app.listen(config.APP_PORT);
 

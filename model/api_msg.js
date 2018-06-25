@@ -49,6 +49,7 @@ module.exports = {
 
     //blog相关
     BlogNotFoundError: new ApiMsg(-50, "博客不存在"),
+    BlogIdMissError: new ApiMsg(-51, "博客id不能缺少"),
 
     //stat相关
 }

@@ -65,7 +65,7 @@ async function getCategoryIdByName(name) {
  */
 async function increaseBlogCount(id) {
     let c = await getCategoryById(id) // 返回的c不是model对象
-    let count = c.blogCount || 0
+    let count = c.blogCount || 0;
     await updateCategory(c._id, {blogCount: count+1})
 }
 

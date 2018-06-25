@@ -148,5 +148,6 @@ module.exports = {
     deleteBlog,
     updateBlog,
     addReadCount,
-    getBlogsByCategoryName
+    getBlogsByCategoryName,
+    getBlogById
 }
