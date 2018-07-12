@@ -1,0 +1,8 @@
+apps:
+  - script   : app.js
+    name: QingBlog
+    instances: 1
+    exec_mode: fork
+    watch  : true
+    env:
+      NODE_ENV: production
